@@ -3,6 +3,18 @@
 Website to check the animations of the characters from the gacha game Brown Dust 2.<br/>
 If you want to request a feature or report a bug you can open an issue.
 
+## Android resource catalog
+
+The Android player uses [`android-live2d.json`](./android-live2d.json) when the project root is selected as its resource directory. The catalog keeps the Android-facing character and costume names in Chinese and maps each entry to the `.skel`/`.atlas` files under `src/assets/spines`.
+
+Spine binary files are not edited. The complete user-curated list is stored in `config/android-motion-allowlist.md` and applies only to `live2d-mobile-android`. The web viewer does not read this list or the Android catalog; its animation list and composite playback remain unchanged. In the Android catalog, entries matched by Chinese character and costume names show only the specified categories and playable animation names, in the listed order. Android uses the original web composite definitions from `src/utils/cutscene_mappings.ts`, including sequential, parallel and external-skeleton actions such as `cut_all`; every component must exist in its source skeleton. Unmatched entries retain their existing catalog. Missing actions are never guessed or renamed.
+
+Regeneration verifies the matched `.skel` binaries and composite dependencies with the local Spine converter, writes playable counts and missing-resource details to `config/android-motion-report.json`, and updates the Android app's bundled `android-motion-allowlist.json`. The bundled rules also filter older imported catalogs. The report distinguishes native and composite counts; `missingMotions` lists only actions unavailable through either mechanism. Regenerate before rebuilding Android after editing the allowlist:
+
+```sh
+node scripts/export-android-library-config.mjs
+```
+
 ## Donations
 
 If you like the work and effort I put into the website and want to help me consider [supporting](https://ko-fi.com/jelosus1).

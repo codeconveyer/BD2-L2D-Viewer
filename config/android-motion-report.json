@@ -1,0 +1,17 @@
+{
+  "summary": {
+    "configuredRoles": 88,
+    "configuredEntries": 192,
+    "configuredPacks": 376,
+    "configuredMotions": 1479,
+    "matchedEntries": 192,
+    "availablePacks": 376,
+    "availableMotions": 1479,
+    "compositeMotions": 179,
+    "nativeMotions": 1300,
+    "missingMotions": 0
+  },
+  "unmatchedEntries": [],
+  "missingPacks": [],
+  "missingMotions": []
+}

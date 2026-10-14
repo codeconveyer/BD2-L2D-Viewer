@@ -43,11 +43,11 @@
         </span>
         <img
           :src="icons[char.icon] || icons['unknown']"
-          :alt="char.costumeName"
+          :alt="getCostumeDisplayName(char.costumeName)"
           class="w-16 h-16 object-cover rounded-[50%]"
         />
         <div class="flex-grow pl-2">
-          <span class="text-lg">{{ char.charName + ': ' + char.costumeName }}</span>
+          <span class="text-lg">{{ getCharacterDisplayName(char) + ': ' + getCostumeDisplayName(char.costumeName) }}</span>
         </div>
         <div class="flex flex-shrink-0 gap-1 pl-2 pr-2">
           <div
@@ -152,6 +152,7 @@
 
 <script setup lang="ts">
 import icons from '@/utils/charIcons';
+import { getCharacterDisplayName, getCostumeDisplayName } from '@/utils/characterName'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useCharacterStore } from '@/stores/characterStore'
 
@@ -172,7 +173,8 @@ const filteredCharacters = computed(() =>
     .map((character, index) => ({ character, index }))
     .filter(({ character: c }) => {
       const query = filter.value.trim().toLowerCase()
-      const matchesSearch = !query || (c.charName + ' ' + c.costumeName).toLowerCase().includes(query)
+      const matchesSearch =
+        !query || `${getCharacterDisplayName(c)} ${getCostumeDisplayName(c.costumeName)}`.toLowerCase().includes(query)
       const matchesFatedGuest = !showFatedGuestOnly.value || !!c.dating
       const matchesUltimate = !showUltimateOnly.value || !!c.cutscene
       const isNpc = c.charName.includes('(Npc)')
